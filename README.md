@@ -61,7 +61,7 @@ During the Ubuntu Server installation, the following profile was configured:
 | Username | `unai` |
 | Password | *(set during install)* |
 
-<!-- IMAGE: Ubuntu installer — profile configuration screen -->
+<img width="593" height="268" alt="image" src="https://github.com/user-attachments/assets/23da8d89-555a-4dc8-b4fa-a2928c18f03e" />
 
 ---
 
@@ -99,7 +99,7 @@ network:
       optional: true
 ```
 
-<!-- IMAGE: Terminal output of the above netplan file -->
+<img width="476" height="407" alt="image" src="https://github.com/user-attachments/assets/152bb1bf-64e5-434c-bb01-0cce67ad862e" />
 
 ---
 
@@ -114,7 +114,7 @@ Expected output confirms both interfaces are up:
 - `enp0s3` → `172.30.20.74/25`
 - `enp0s8` → `10.2.11.254/24`
 
-<!-- IMAGE: ip a output showing both interfaces active -->
+<img width="601" height="266" alt="image" src="https://github.com/user-attachments/assets/e0ae09c8-5c13-4d1c-9467-063193dea5e4" />
 
 ---
 
@@ -137,7 +137,7 @@ cat /etc/hostname
 ls11
 ```
 
-<!-- IMAGE: /etc/hosts and /etc/hostname output -->
+<img width="480" height="213" alt="image" src="https://github.com/user-attachments/assets/1b3e04d1-a7e8-4cf0-8dcb-8c7b3dca034e" />
 
 ---
 
@@ -149,7 +149,7 @@ Install all required packages for Samba Active Directory Domain Controller:
 sudo apt install samba krb5-user smbclient winbind dnsutils -y
 ```
 
-<!-- IMAGE: apt install command in terminal -->
+<img width="598" height="25" alt="image" src="https://github.com/user-attachments/assets/eb8ecc98-9289-425b-aefa-4c28bc95fb2c" />
 
 Then stop the Samba service and back up the default configuration file before provisioning:
 
@@ -158,7 +158,7 @@ sudo systemctl stop samba-ad-dc 2>/dev/null || true
 sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
 ```
 
-<!-- IMAGE: Terminal showing the backup commands -->
+<img width="525" height="59" alt="image" src="https://github.com/user-attachments/assets/efd6dd82-986e-4c94-91f0-1b9c72d03b7e" />
 
 ---
 
@@ -187,7 +187,7 @@ sudo samba-tool domain provision \
   --option="bind interfaces only=yes"
 ```
 
-<!-- IMAGE: samba-tool domain provision command output -->
+<img width="605" height="39" alt="image" src="https://github.com/user-attachments/assets/783318bc-673f-491a-a65d-146f59ebacce" />
 
 ---
 
@@ -211,7 +211,7 @@ Server site     : Default-First-Site-Name
 Client site     : Default-First-Site-Name
 ```
 
-<!-- IMAGE: samba-tool domain info output -->
+<img width="432" height="148" alt="image" src="https://github.com/user-attachments/assets/7ee86888-a0c1-44d9-b17a-3d180cdbe76b" />
 
 **Connectivity test from the Linux client** — ping the domain, FQDN, and server IP:
 
@@ -223,7 +223,7 @@ ping 172.30.20.74
 
 All three should return 0% packet loss.
 
-<!-- IMAGE: Ping results from Linux client — all three successful -->
+<img width="599" height="482" alt="image" src="https://github.com/user-attachments/assets/09769593-5aae-40db-bd0f-9fb810a3827d" />
 
 ---
 
@@ -263,7 +263,7 @@ Current DNS Server: 10.239.3.7
        DNS Servers: 172.30.20.74 10.239.3.7
 ```
 
-<!-- IMAGE: Client netplan config and resolvectl output -->
+<img width="596" height="404" alt="image" src="https://github.com/user-attachments/assets/c15194fc-ba4a-4a07-9fab-f7ac99ea93ae" />
 
 ---
 
@@ -275,7 +275,7 @@ Install required packages on the client:
 sudo apt install sssd-ad sssd-tools realmd adcli packagekit -y
 ```
 
-<!-- IMAGE: apt install command on the client -->
+<img width="595" height="23" alt="image" src="https://github.com/user-attachments/assets/ce9243c4-6eaf-4655-bf91-69c5e9b1def9" />
 
 Join the domain:
 
@@ -290,7 +290,9 @@ The process performs the following steps automatically:
 4. Kerberos keytab generation at `/etc/krb5.keytab`
 5. SSSD enablement and restart
 
-<!-- IMAGE: Full realm join verbose output -->
+<img width="1174" height="687" alt="image" src="https://github.com/user-attachments/assets/3e6beec5-41a0-453b-9e2b-4b54115589b4" />
+<img width="1173" height="208" alt="image" src="https://github.com/user-attachments/assets/ec77c9b5-fec6-48e9-ac7d-71392fd3db62" />
+
 
 Verify successful enrollment:
 
@@ -310,7 +312,7 @@ lab11.lan
   login-policy: allow-realm-logins
 ```
 
-<!-- IMAGE: realm discover output -->
+<img width="675" height="599" alt="image" src="https://github.com/user-attachments/assets/1ed28943-9c81-4fa7-9e79-f2ae880cb1c6" />
 
 ---
 
@@ -327,7 +329,7 @@ LC11$
 LS11$
 ```
 
-<!-- IMAGE: samba-tool computer list output showing LC11$ and LS11$ -->
+<img width="664" height="164" alt="image" src="https://github.com/user-attachments/assets/683878ce-32d3-4034-8724-01b6eaf38c24" />
 
 ---
 
@@ -341,7 +343,7 @@ sudo samba-tool user create Bob admin_21
 sudo samba-tool user create Charlie admin_21
 ```
 
-<!-- IMAGE: Terminal output — all three users created successfully -->
+<img width="904" height="243" alt="image" src="https://github.com/user-attachments/assets/c1ce5df4-d9d1-49dd-840f-45cf7c4cea19" />
 
 ---
 
@@ -352,7 +354,7 @@ sudo samba-tool group add IT_Admins
 sudo samba-tool group add Students
 ```
 
-<!-- IMAGE: Group creation output -->
+<img width="775" height="131" alt="image" src="https://github.com/user-attachments/assets/071731b7-1e9a-45d9-894b-e1dcffcf07ff" />
 
 ---
 
@@ -377,7 +379,7 @@ sudo samba-tool group listmembers Students
 # Output: Charlie, Bob
 ```
 
-<!-- IMAGE: Group membership verification output -->
+<img width="978" height="375" alt="image" src="https://github.com/user-attachments/assets/4f1a9932-91e6-4d22-bde5-ba0b3e7bd2c2" />
 
 ---
 
@@ -393,7 +395,7 @@ sudo samba-tool group listmembers Students
 | Preferred DNS | `172.30.20.74` *(Samba DC)* |
 | Alternate DNS | `10.239.3.7` |
 
-<!-- IMAGE: Windows TCP/IPv4 properties dialog -->
+<img width="568" height="607" alt="image" src="https://github.com/user-attachments/assets/888b8c99-f39f-448b-afcc-490d2cf8a101" />
 
 **Step 2 — Join domain** via *System Properties → Change → Domain*:
 
@@ -403,7 +405,7 @@ sudo samba-tool group listmembers Students
 | Password | *(admin password)* |
 | Domain | `LAB11.LAN` |
 
-<!-- IMAGE: Windows domain join credential dialog -->
+<img width="1032" height="373" alt="image" src="https://github.com/user-attachments/assets/a3e4a5a6-312e-4468-bc5e-7a0ae4c6cbdb" />
 
 **Step 3 — Set computer name and confirm domain user:**
 
@@ -413,11 +415,11 @@ sudo samba-tool group listmembers Students
 | Domain | `LAB11.LAN` |
 | Domain user to add | `Administrator` |
 
-<!-- IMAGE: Windows computer name dialog + domain user confirmation -->
+<img width="603" height="797" alt="image" src="https://github.com/user-attachments/assets/6143b975-bf27-4ea1-9234-15c53aa2a39f" />
 
 **Step 4 — Login confirmation** — Windows login screen shows `LAB11.LAN\Administrator`.
 
-<!-- IMAGE: Windows login screen showing LAB11.LAN\Administrator -->
+<img width="964" height="716" alt="image" src="https://github.com/user-attachments/assets/ec708729-77a1-4737-997e-da1b07c9a33f" />
 
 ---
 
@@ -446,7 +448,7 @@ objectClass: top
 objectClass: organizationalUnit
 ```
 
-<!-- IMAGE: nano editor showing the LDIF file -->
+<img width="804" height="389" alt="image" src="https://github.com/user-attachments/assets/4e105a5d-d60f-4add-a4de-1f61f9fd3a80" />
 
 Import the OUs into Active Directory:
 
@@ -454,7 +456,7 @@ Import the OUs into Active Directory:
 sudo ldbadd -H /var/lib/samba/private/sam.ldb mis_ous.ldif
 ```
 
-<!-- IMAGE: ldbadd command and confirmation output -->
+<img width="922" height="39" alt="image" src="https://github.com/user-attachments/assets/1e44cea3-d501-4a48-8ee2-d4dc11bb2d4a" />
 
 ---
 
@@ -474,7 +476,7 @@ sudo samba-tool user create Bob admin_21 --userou="OU=Students_UO"
 sudo samba-tool user create Charlie admin_21 --userou="OU=Students_UO"
 ```
 
-<!-- IMAGE: Terminal showing delete errors, deletion, and successful re-creation -->
+<img width="972" height="452" alt="image" src="https://github.com/user-attachments/assets/1d2a2c5b-69d3-451c-8712-fbd78b387b4d" />
 
 Re-add users to their groups:
 
@@ -484,7 +486,7 @@ sudo samba-tool group addmembers Students Bob
 sudo samba-tool group addmembers Students Charlie
 ```
 
-<!-- IMAGE: Group addmembers output -->
+<img width="822" height="175" alt="image" src="https://github.com/user-attachments/assets/1c92ee8b-53e0-4962-90b2-78ab05ce6d2e" />
 
 ---
 
@@ -525,7 +527,9 @@ Account lockout duration changed!
 All changes applied successfully!
 ```
 
-<!-- IMAGE: All three passwordsettings commands and their output -->
+<img width="962" height="115" alt="image" src="https://github.com/user-attachments/assets/015106ab-aef1-4c15-ad6d-5f298781fbe9" />
+<img width="962" height="104" alt="image" src="https://github.com/user-attachments/assets/22d4e2dc-4573-44c6-816c-5eb99d397e39" />
+<img width="964" height="106" alt="image" src="https://github.com/user-attachments/assets/e79faafa-4a49-4d05-af53-d6d4136b6643" />
 
 ---
 
@@ -549,11 +553,11 @@ Account lockout threshold (attempts):   3
 Reset account lockout after (mins):     30
 ```
 
-<!-- IMAGE: passwordsettings show output -->
+<img width="745" height="359" alt="image" src="https://github.com/user-attachments/assets/7addaaa5-3ce9-48ea-bd47-8d621297913a" />
 
 **Client-side verification** — After 3 failed login attempts, the account is locked and the Windows login screen displays: *"Your account has been disabled. Please contact your system administrator."*
 
-<!-- IMAGE: Windows login screen showing account disabled message -->
+<img width="906" height="737" alt="image" src="https://github.com/user-attachments/assets/0d3d928f-7483-419b-9ba8-4ad00e035ff2" />
 
 ---
 
@@ -586,7 +590,7 @@ sudo samba-tool group addmembers HR user02
 sudo samba-tool group addmembers IT_Support techsupport
 ```
 
-<!-- IMAGE: Group and user creation output -->
+<img width="640" height="263" alt="image" src="https://github.com/user-attachments/assets/43819010-b98f-4c70-b192-24b89122d569" />
 
 ---
 
@@ -600,7 +604,7 @@ sudo mkdir -p /srv/samba/HRDocs
 sudo mkdir -p /srv/samba/Public
 ```
 
-<!-- IMAGE: mkdir commands -->
+<img width="651" height="86" alt="image" src="https://github.com/user-attachments/assets/c694a822-4be9-4b6a-b319-8705433a13e6" />
 
 ---
 
@@ -649,7 +653,7 @@ sudo nano /etc/samba/smb.conf
         guest ok = yes
 ```
 
-<!-- IMAGE: nano editor showing smb.conf with all shares -->
+<img width="454" height="543" alt="image" src="https://github.com/user-attachments/assets/0b314236-4075-42e5-8258-49f81f1527f3" />
 
 Apply the changes:
 
@@ -657,7 +661,7 @@ Apply the changes:
 sudo systemctl restart samba-ad-dc
 ```
 
-<!-- IMAGE: systemctl restart command -->
+<img width="632" height="31" alt="image" src="https://github.com/user-attachments/assets/803baab1-f74d-4e53-8202-d81a7de36cc5" />
 
 ---
 
@@ -682,7 +686,7 @@ shadow:     files
 gshadow:    files
 ```
 
-<!-- IMAGE: nano editor showing /etc/nsswitch.conf with winbind added -->
+<img width="949" height="302" alt="image" src="https://github.com/user-attachments/assets/0429d63b-1ac5-4034-b5ac-db2b8efe03db" />
 
 Restart Samba:
 
@@ -690,7 +694,7 @@ Restart Samba:
 sudo systemctl restart samba-ad-dc
 ```
 
-<!-- IMAGE: systemctl restart command -->
+<img width="621" height="33" alt="image" src="https://github.com/user-attachments/assets/dbbd2d36-690c-47bc-b257-048a0f279f5e" />
 
 ---
 
@@ -710,8 +714,8 @@ sudo chmod 2770 /srv/samba/FinanceDocs   # group rwx, sticky bit, others: none
 sudo chmod 2770 /srv/samba/HRDocs
 sudo chmod 2777 /srv/samba/Public        # Public: everyone can read/write
 ```
-
-<!-- IMAGE: chown and chmod commands -->
+<img width="874" height="53" alt="image" src="https://github.com/user-attachments/assets/0555281f-823e-45ab-877e-75202ce2e711" />
+<img width="672" height="87" alt="image" src="https://github.com/user-attachments/assets/ae9e8bfd-b00e-4e49-b9b0-57c95560e3b7" />
 
 ---
 
@@ -719,7 +723,7 @@ sudo chmod 2777 /srv/samba/Public        # Public: everyone can read/write
 
 A new 10 GB virtual disk was added to the server via VirtualBox storage settings.
 
-<!-- IMAGE: VirtualBox storage panel showing sda (40GB) and new sdb (10GB) -->
+<img width="736" height="174" alt="image" src="https://github.com/user-attachments/assets/331073e8-6665-4a49-9cb6-3f1e6be531f7" />
 
 Confirm the disk is detected:
 
@@ -738,7 +742,7 @@ sdb                         8:16   10G   disk
 sr0                        11:0  1024M   rom
 ```
 
-<!-- IMAGE: lsblk output showing sdb as unpartitioned 10GB disk -->
+<img width="893" height="415" alt="image" src="https://github.com/user-attachments/assets/bfadb8c3-e740-4fcc-83f6-d909209a5da2" />
 
 ---
 
@@ -761,7 +765,7 @@ Steps inside fdisk:
 Created a new partition 1 of type 'Linux' and of size 10 GiB.
 ```
 
-<!-- IMAGE: fdisk interactive session output -->
+<img width="963" height="694" alt="image" src="https://github.com/user-attachments/assets/ffeb84ca-a740-4fcd-a9b1-6c44b5c1e999" />
 
 **Format as ext4:**
 
@@ -773,7 +777,7 @@ sudo mkfs.ext4 /dev/sdb1
 Filesystem UUID: 896984e1-6d2a-49c9-b8e5-4c1694c18d5d
 ```
 
-<!-- IMAGE: mkfs.ext4 output -->
+<img width="903" height="322" alt="image" src="https://github.com/user-attachments/assets/9f97b7f2-9a8e-4692-a74e-8c73eb5bab63" />
 
 **Create mount point and mount:**
 
@@ -782,7 +786,7 @@ sudo mkdir /mnt/datadrive
 sudo mount /dev/sdb1 /mnt/datadrive
 ```
 
-<!-- IMAGE: mkdir and mount commands -->
+<img width="629" height="57" alt="image" src="https://github.com/user-attachments/assets/5642ff7c-04a3-4508-bdf4-9dd5d5183ad1" />
 
 ---
 
@@ -798,7 +802,7 @@ sudo blkid /dev/sdb1
 /dev/sdb1: UUID="896984e1-6d2a-49c9-b8e5-4c1694c18d5d" BLOCK_SIZE="4096" TYPE="ext4"
 ```
 
-<!-- IMAGE: blkid output -->
+<img width="967" height="105" alt="image" src="https://github.com/user-attachments/assets/08b34d4d-0474-459c-bdcf-d4d9e6d6d0e2" />
 
 Add the entry to `/etc/fstab`:
 
@@ -812,7 +816,7 @@ Append this line at the end:
 UUID=896984e1-6d2a-49c9-b8e5-4c1694c18d5d /mnt/datadrive ext4 defaults 0 0
 ```
 
-<!-- IMAGE: nano editor showing /etc/fstab with the new UUID entry -->
+<img width="868" height="232" alt="image" src="https://github.com/user-attachments/assets/2e7a1f41-b790-4126-bc78-8e592578e408" />
 
 ---
 
@@ -834,7 +838,7 @@ Add the share to `/etc/samba/smb.conf`:
     guest ok = yes
 ```
 
-<!-- IMAGE: Final smb.conf showing all shares including [Backups] -->
+<img width="522" height="783" alt="image" src="https://github.com/user-attachments/assets/f38d8a9d-bca1-40b8-b1e2-ebc04b49e612" />
 
 Restart Samba to apply:
 
@@ -842,7 +846,7 @@ Restart Samba to apply:
 sudo systemctl restart samba-ad-dc
 ```
 
-<!-- IMAGE: systemctl restart command -->
+<img width="863" height="54" alt="image" src="https://github.com/user-attachments/assets/8b51acbb-a0b5-428a-935b-8797b1534112" />
 
 ---
 
@@ -869,7 +873,7 @@ tar -czf "$DESTINO/$ARCHIVO" "$ORIGEN"
 echo "Backup completed on $(date)" >> /var/log/backup_samba.log
 ```
 
-<!-- IMAGE: nano editor showing the backup script -->
+<img width="893" height="377" alt="image" src="https://github.com/user-attachments/assets/28dc3228-bd0c-4249-a17d-566d7accc5e6" />
 
 **Make the script executable:**
 
@@ -877,7 +881,7 @@ echo "Backup completed on $(date)" >> /var/log/backup_samba.log
 chmod +x /home/unai/backup_finanzas.sh
 ```
 
-<!-- IMAGE: chmod command -->
+<img width="1094" height="51" alt="image" src="https://github.com/user-attachments/assets/9c25035e-1da6-43ff-85f9-d8eebe26f24b" />
 
 **Schedule with cron** — run every day at 22:00:
 
@@ -891,7 +895,7 @@ Add this line:
 00 22 * * * /home/unai/backup_finanzas.sh
 ```
 
-<!-- IMAGE: crontab file showing the scheduled job -->
+<img width="1109" height="176" alt="image" src="https://github.com/user-attachments/assets/c4b993b4-83b8-46b5-b8f2-6c38dddfb699" />
 
 ---
 
@@ -918,7 +922,7 @@ network:
           via: 172.30.20.1
 ```
 
-<!-- IMAGE: netplan config on the second server -->
+<img width="1041" height="440" alt="image" src="https://github.com/user-attachments/assets/5f75b100-cfeb-4166-971f-e4650fa4fdb8" />
 
 Configure DNS resolution to point to the first domain controller:
 
@@ -932,7 +936,7 @@ nameserver 172.30.20.74
 search lab11.lan
 ```
 
-<!-- IMAGE: resolv.conf on second server -->
+<img width="678" height="203" alt="image" src="https://github.com/user-attachments/assets/051a936e-0455-41fc-90f9-575f22e79945" />
 
 **Install required packages:**
 
@@ -944,7 +948,7 @@ sudo apt install -y acl attr samba samba-dsdb-modules samba-vfs-modules \
 
 During installation, set the default Kerberos realm to `LAB11.LAN`.
 
-<!-- IMAGE: Kerberos realm configuration dialog showing LAB11.LAN -->
+<img width="1099" height="458" alt="image" src="https://github.com/user-attachments/assets/8c10a7e0-5d01-4009-8ecd-5d7860063f0c" />
 
 ---
 
@@ -961,7 +965,7 @@ sudo samba-tool domain provision \
   --adminpass='admin_21'
 ```
 
-<!-- IMAGE: samba-tool domain provision command on second server -->
+<img width="1107" height="65" alt="image" src="https://github.com/user-attachments/assets/c478e172-b11a-4921-a7dd-7c252b1cefba" />
 
 Disable individual Samba services and enable the AD DC service:
 
@@ -971,7 +975,7 @@ sudo systemctl unmask samba-ad-dc
 sudo systemctl enable --now samba-ad-dc
 ```
 
-<!-- IMAGE: systemctl disable and enable commands -->
+<img width="1108" height="373" alt="image" src="https://github.com/user-attachments/assets/5b0f9a10-83b9-4891-828e-2cf8870a19af" />
 
 Update `/etc/resolv.conf` to use the local DNS:
 
@@ -984,7 +988,7 @@ nameserver 127.0.0.1
 search school.lan
 ```
 
-<!-- IMAGE: resolv.conf on second server pointing to 127.0.0.1 -->
+<img width="765" height="107" alt="image" src="https://github.com/user-attachments/assets/2c6b8e59-50a0-4297-9761-eff4131614df" />
 
 Verify the second domain info:
 
@@ -1002,7 +1006,7 @@ Server site     : Default-First-Site-Name
 Client site     : Default-First-Site-Name
 ```
 
-<!-- IMAGE: samba-tool domain info output for school.lan -->
+<img width="817" height="304" alt="image" src="https://github.com/user-attachments/assets/5bdc777c-4021-4996-a026-a568a0152c37" />
 
 ---
 
@@ -1018,7 +1022,7 @@ sudo samba-tool dns add 127.0.0.1 lab11.lan @ NS ls11.lab11.lan -U Administrator
 sudo samba-tool dns add 127.0.0.1 lab11.lan ls11 A 172.30.20.74 -U Administrator
 ```
 
-<!-- IMAGE: DNS zone creation and record addition on second server -->
+<img width="1109" height="147" alt="image" src="https://github.com/user-attachments/assets/a4bf53e3-3976-48b3-b30c-054182ab284c" />
 
 **On the first server (`lab11.lan`)** — add a zone and NS record pointing to the second server:
 
@@ -1028,7 +1032,7 @@ sudo samba-tool dns add 127.0.0.1 school.lan @ NS lab11tr.school.lan -U Administ
 sudo samba-tool dns add 127.0.0.1 school.lan lab11tr A 172.30.20.72 -U Administrator
 ```
 
-<!-- IMAGE: DNS zone creation and record addition on first server -->
+<img width="1109" height="150" alt="image" src="https://github.com/user-attachments/assets/7b50cc1c-c648-4a08-aa9a-ffec04166703" />
 
 **Verify connectivity** — ping the second server's FQDN from the first server:
 
@@ -1059,7 +1063,7 @@ ping school.lan → No address associated with hostname
 ping lab11.lan → Temporary failure in name resolution
 ```
 
-<!-- IMAGE: Side-by-side terminals showing ping failures -->
+<img width="1252" height="128" alt="image" src="https://github.com/user-attachments/assets/c02c7756-12f5-445f-bb2e-91ba4cb6fb92" />
 
 **Solution:** Change the `dns forwarder` in `/etc/samba/smb.conf` on the first server to point to the second server's IP, so it can forward unknown domain queries:
 
@@ -1074,7 +1078,7 @@ sudo nano /etc/samba/smb.conf
         ...
 ```
 
-<!-- IMAGE: smb.conf with dns forwarder changed to 172.30.20.72 -->
+<img width="915" height="370" alt="image" src="https://github.com/user-attachments/assets/0850e8a3-a75f-4747-9f0c-dab2eceafbe4" />
 
 Restart Samba:
 
@@ -1082,7 +1086,7 @@ Restart Samba:
 sudo systemctl restart samba-ad-dc
 ```
 
-<!-- IMAGE: systemctl restart on first server -->
+<img width="720" height="37" alt="image" src="https://github.com/user-attachments/assets/b8d746ca-5d0d-498d-85bc-b64d94b9171d" />
 
 After this change, pings between the two domains resolve successfully, which is the prerequisite for establishing a formal forest trust relationship.
 
