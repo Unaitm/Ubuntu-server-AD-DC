@@ -24,11 +24,12 @@
   - [Create Domain Users](#1-create-domain-users)
   - [Create Security Groups](#2-create-security-groups)
   - [Add Users to Groups](#3-add-users-to-groups)
-  - [Windows Client — Join Domain](#4-windows-client--join-domain)
-  - [Organizational Units (OUs)](#5-organizational-units-ous)
-  - [Create Users inside OUs](#6-create-users-inside-ous)
-  - [Password Policy (GPO)](#7-password-policy-gpo)
-  - [Verify Password Policy](#8-verify-password-policy)
+  - [Kerberos Authentication Test](#4-kerberos-authentication-test)
+  - [Windows Client — Join Domain](#5-windows-client--join-domain)
+  - [Organizational Units (OUs)](#6-organizational-units-ous)
+  - [Create Users inside OUs](#7-create-users-inside-ous)
+  - [Password Policy (GPO)](#8-password-policy-gpo)
+  - [Verify Password Policy](#9-verify-password-policy)
 - [Sprint 3 — Shared Folders, Permissions & Disk Management](#sprint-3--shared-folders-permissions--disk-management)
   - [Create Groups and Users](#1-create-groups-and-users)
   - [Shared Folder Structure](#2-shared-folder-structure)
@@ -293,7 +294,6 @@ The process performs the following steps automatically:
 <img width="1174" height="687" alt="image" src="https://github.com/user-attachments/assets/3e6beec5-41a0-453b-9e2b-4b54115589b4" />
 <img width="1173" height="208" alt="image" src="https://github.com/user-attachments/assets/ec77c9b5-fec6-48e9-ac7d-71392fd3db62" />
 
-
 Verify successful enrollment:
 
 ```bash
@@ -383,7 +383,59 @@ sudo samba-tool group listmembers Students
 
 ---
 
-### 4. Windows Client — Join Domain
+### 4. Kerberos Authentication Test
+
+After creating domain users, verify that Kerberos authentication is working correctly by obtaining and inspecting a ticket for one of the new users.
+
+**Request a Kerberos Ticket Granting Ticket (TGT):**
+
+```bash
+kinit Alice@LAB11.LAN
+```
+
+You will be prompted for the user's password. A warning will indicate when the password is set to expire:
+
+```
+Password for Alice@LAB11.LAN:
+Warning: Your password will expire in 41 days on ...
+```
+
+**List the active Kerberos tickets:**
+
+```bash
+klist
+```
+
+```
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: Alice@LAB11.LAN
+
+Valid starting       Expires              Service principal
+22/02/26 21:29:16   23/02/26 07:29:16   krbtgt/LAB11.LAN@LAB11.LAN
+        renew until 23/02/26 21:29:10
+```
+
+The output confirms:
+- The ticket cache is stored at `/tmp/krb5cc_1000`
+- The default principal is `Alice@LAB11.LAN`
+- The TGT is valid for 10 hours and renewable for 24 hours
+- The service principal `krbtgt/LAB11.LAN@LAB11.LAN` confirms the domain controller issued the ticket correctly
+
+**Destroy the ticket when done:**
+
+```bash
+kdestroy
+```
+
+This removes all cached Kerberos credentials, which is good practice after testing.
+
+<img width="722" height="175" alt="image" src="https://github.com/user-attachments/assets/YOUR-KERBEROS-SCREENSHOT-ID" />
+
+> ✅ A successfully issued TGT confirms that Kerberos is fully operational on the domain, the user account exists and is active, and the KDC (Key Distribution Center) on the Samba DC is responding correctly.
+
+---
+
+### 5. Windows Client — Join Domain
 
 **Step 1 — Configure network** on the Windows machine:
 
@@ -423,7 +475,7 @@ sudo samba-tool group listmembers Students
 
 ---
 
-### 5. Organizational Units (OUs)
+### 6. Organizational Units (OUs)
 
 Create an LDIF file to define three Organizational Units:
 
@@ -460,7 +512,7 @@ sudo ldbadd -H /var/lib/samba/private/sam.ldb mis_ous.ldif
 
 ---
 
-### 6. Create Users inside OUs
+### 7. Create Users inside OUs
 
 > **Note:** The initial attempt failed because users already existed. They were deleted and re-created with the correct OU assignment.
 
@@ -490,7 +542,7 @@ sudo samba-tool group addmembers Students Charlie
 
 ---
 
-### 7. Password Policy (GPO)
+### 8. Password Policy (GPO)
 
 Configure domain-wide password settings:
 
@@ -533,7 +585,7 @@ All changes applied successfully!
 
 ---
 
-### 8. Verify Password Policy
+### 9. Verify Password Policy
 
 ```bash
 sudo samba-tool domain passwordsettings show
@@ -714,6 +766,7 @@ sudo chmod 2770 /srv/samba/FinanceDocs   # group rwx, sticky bit, others: none
 sudo chmod 2770 /srv/samba/HRDocs
 sudo chmod 2777 /srv/samba/Public        # Public: everyone can read/write
 ```
+
 <img width="874" height="53" alt="image" src="https://github.com/user-attachments/assets/0555281f-823e-45ab-877e-75202ce2e711" />
 <img width="672" height="87" alt="image" src="https://github.com/user-attachments/assets/ae9e8bfd-b00e-4e49-b9b0-57c95560e3b7" />
 
@@ -1047,8 +1100,6 @@ PING lab11tr.school.lan (172.30.20.72) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss
 ```
 
-<!-- IMAGE: Ping from ls11 to lab11tr.school.lan — 0% packet loss -->
-
 ---
 
 ### 4. Troubleshoot Ping Between Domains
@@ -1097,6 +1148,6 @@ After this change, pings between the two domains resolve successfully, which is 
 | Sprint | Key Achievements |
 |--------|-----------------|
 | **Sprint 1** | Ubuntu Server installed, Samba AD DC provisioned for `lab11.lan`, Linux client joined the domain |
-| **Sprint 2** | Domain users and groups created, Windows client joined, OUs defined, password policy enforced |
+| **Sprint 2** | Domain users and groups created, Kerberos authentication verified, Windows client joined, OUs defined, password policy enforced |
 | **Sprint 3** | Shared folders with group-based ACLs, 10 GB disk added and mounted persistently, automated backup via cron |
 | **Sprint 4** | Second domain `school.lan` provisioned, cross-domain DNS configured, connectivity between domains established |
