@@ -46,6 +46,7 @@
   - [Provision Second Domain](#2-provision-second-domain)
   - [DNS Cross-Resolution](#3-dns-cross-resolution)
   - [Troubleshoot Ping Between Domains](#4-troubleshoot-ping-between-domains)
+  - [Kerberos Cross-Domain Authentication Test](#5-kerberos-cross-domain-authentication-test)
 
 ---
 
@@ -1143,6 +1144,55 @@ After this change, pings between the two domains resolve successfully, which is 
 
 ---
 
+### 5. Kerberos Cross-Domain Authentication Test
+
+With DNS resolution working between both domains, the final verification is to confirm that a user can obtain a Kerberos ticket from the second domain (`SCHOOL.LAN`), proving the trust is fully operational at the authentication level.
+
+**Request a TGT for a user in the second domain:**
+
+```bash
+kinit Administrator@SCHOOL.LAN
+```
+
+You will be prompted for the password. A warning about password expiry is expected and normal:
+
+```
+Password for Administrator@SCHOOL.LAN:
+Warning: Your password will expire in 41 days on ...
+```
+
+**List the active Kerberos tickets:**
+
+```bash
+klist
+```
+
+```
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: Administrator@SCHOOL.LAN
+
+Valid starting       Expires              Service principal
+22/02/26 21:29:16   23/02/26 07:29:16   krbtgt/SCHOOL.LAN@SCHOOL.LAN
+        renew until 23/02/26 21:29:10
+```
+
+The output confirms:
+- The ticket cache is stored at `/tmp/krb5cc_1000`
+- The default principal resolves to `Administrator@SCHOOL.LAN` — the second domain
+- The TGT was issued by `krbtgt/SCHOOL.LAN@SCHOOL.LAN`, confirming the second DC's KDC is reachable and responding
+
+**Destroy the ticket after testing:**
+
+```bash
+kdestroy
+```
+
+<img width="722" height="175" alt="image" src="https://github.com/user-attachments/assets/YOUR-KERBEROS-SCREENSHOT-ID" />
+
+> ✅ A successfully issued TGT against `SCHOOL.LAN` from the `LAB11.LAN` server confirms that cross-domain name resolution, network connectivity, and Kerberos authentication are all working correctly — the foundation required for a formal Active Directory forest trust.
+
+---
+
 ## Summary
 
 | Sprint | Key Achievements |
@@ -1150,4 +1200,4 @@ After this change, pings between the two domains resolve successfully, which is 
 | **Sprint 1** | Ubuntu Server installed, Samba AD DC provisioned for `lab11.lan`, Linux client joined the domain |
 | **Sprint 2** | Domain users and groups created, Kerberos authentication verified, Windows client joined, OUs defined, password policy enforced |
 | **Sprint 3** | Shared folders with group-based ACLs, 10 GB disk added and mounted persistently, automated backup via cron |
-| **Sprint 4** | Second domain `school.lan` provisioned, cross-domain DNS configured, connectivity between domains established |
+| **Sprint 4** | Second domain `school.lan` provisioned, cross-domain DNS configured, connectivity established, Kerberos cross-domain authentication verified |
