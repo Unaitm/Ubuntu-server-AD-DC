@@ -1187,8 +1187,6 @@ The output confirms:
 kdestroy
 ```
 
-<img width="722" height="175" alt="image" src="https://github.com/user-attachments/assets/YOUR-KERBEROS-SCREENSHOT-ID" />
-
 > ✅ A successfully issued TGT against `SCHOOL.LAN` from the `LAB11.LAN` server confirms that cross-domain name resolution, network connectivity, and Kerberos authentication are all working correctly — the foundation required for a formal Active Directory forest trust.
 
 ---
